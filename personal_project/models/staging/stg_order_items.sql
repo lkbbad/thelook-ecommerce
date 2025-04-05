@@ -1,3 +1,9 @@
+-- Staging Model: stg_order_items
+-- Description: Standardizes raw order_items data by renaming fields and clarifying column semantics.
+-- Includes sale price and shipment lifecycle timestamps for each item purchased by a user.
+-- Used by: order_items_enriched, product_performance, customer_metrics
+-- Source table: thelook_local.order_items
+
 set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 

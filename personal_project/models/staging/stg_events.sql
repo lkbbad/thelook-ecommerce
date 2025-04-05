@@ -1,3 +1,8 @@
+-- Staging Model: stg_events
+-- Description: Cleans and standardizes raw events data. Renames fields, casts timestamps and parses product_id from URI for use in product-level engagement analysis.
+-- Used by: user_events, event_product_views, customer_metrics, product_performance
+-- Source table: thelook_local.events
+
 set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 

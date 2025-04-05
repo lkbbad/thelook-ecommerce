@@ -1,3 +1,9 @@
+-- Staging Model: stg_orders
+-- Description: Cleans and renames raw orders data. Standardizes column names for order status, timestamps, and item count for each user’s order.
+-- Includes key lifecycle timestamps (created, shipped, delivered, returned) and total item count.
+-- Used by: user_orders, customer_metrics
+-- Source table: thelook_local.orders
+
 set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
