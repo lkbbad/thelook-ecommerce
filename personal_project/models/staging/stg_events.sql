@@ -7,7 +7,7 @@ set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
 CREATE OR REPLACE TABLE
-  `stg_events` AS
+  stg_events AS
 SELECT
   id AS event_id
   , user_id
@@ -20,4 +20,4 @@ SELECT
   , browser
   , traffic_source
   , user_id IS NULL AS no_user_id
-FROM `thelook_local.events`;
+FROM thelook_local.events;

@@ -8,7 +8,7 @@ set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
 CREATE OR REPLACE TABLE 
-  `stg_order_items` AS
+  stg_order_items AS
 SELECT 
   id AS item_id
   , order_id
@@ -21,4 +21,4 @@ SELECT
   , returned_at AS item_returned_at
   , sale_price AS item_sale_price
 FROM 
-  `thelook_local.order_items`;
+  thelook_local.order_items;

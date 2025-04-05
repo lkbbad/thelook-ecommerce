@@ -8,7 +8,7 @@ set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
 CREATE OR REPLACE TABLE 
-  `customer_metrics` AS
+  customer_metrics AS
 WITH user_orders_agg AS (
   SELECT
     o.user_id

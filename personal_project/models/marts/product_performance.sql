@@ -7,14 +7,14 @@ set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
 CREATE OR REPLACE TABLE 
-  `product_performance` AS
+  product_performance AS
 WITH product_views AS (
   SELECT 
     product_id
     , COALESCE(COUNT(DISTINCT event_id), 0) AS total_product_views
     , COALESCE(COUNT(DISTINCT session_id), 0) AS unique_product_views
   FROM
-    `events_product_views`
+    events_product_views
   GROUP BY 
     product_id
 ),
@@ -29,7 +29,7 @@ product_sales_metrics AS (
   , COALESCE(COUNTIF(item_status = 'Returned'), 0) AS total_product_returns
   , SAFE_DIVIDE(SUM(product_sale_price), COUNT(DISTINCT item_id)) AS avg_sale_price
   FROM
-    `order_items_enriched`
+    order_items_enriched
   GROUP BY 
     product_id
 )
@@ -50,8 +50,8 @@ SELECT
   , COALESCE(MAX(s.total_product_returns), 0) AS total_product_returns
   , COALESCE(SAFE_DIVIDE(MAX(s.total_product_returns), MAX(s.total_product_purchases)), 0) AS product_return_rate
 FROM
-  `stg_products` p
-LEFT JOIN `product_views` v ON p.product_id = v.product_id
-LEFT JOIN `product_sales_metrics` s ON p.product_id = s.product_id
+  stg_products p
+LEFT JOIN product_views v ON p.product_id = v.product_id
+LEFT JOIN product_sales_metrics s ON p.product_id = s.product_id
 GROUP BY 
   p.product_id;
