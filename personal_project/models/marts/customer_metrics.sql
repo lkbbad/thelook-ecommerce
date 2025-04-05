@@ -1,3 +1,9 @@
+-- Mart: customer_metrics
+-- Description: One row per user summarizing behavioral and transactional metrics for customer profiling.
+-- Includes event counts, session counts, product views, order volume, revenue, profit, and product diversity.
+-- Used for: Customer segmentation, LTV estimation, and identifying candidates for cross-sell or retention campaigns.
+-- Source tables: stg_users, user_orders, user_events, events_product_views, order_items_enriched
+
 set @@dataset_project_id = 'round-music-451401-a5';
 set @@dataset_id = 'thelook_analytics';
 
@@ -6,9 +12,10 @@ CREATE OR REPLACE TABLE
 WITH user_orders_agg AS (
   SELECT
     o.user_id
-    , SUM(i.product_retail_price) AS total_order_revenue
+    , SUM(i.product_retail_price) AS total_order_potential_revenue
+    , SUM(i.product_sale_price) AS total_order_revenue
     , SUM(i.product_cost) AS total_order_cost
-    , AVG(i.product_retail_price) AS avg_order_revenue
+    , AVG(i.product_sale_price) AS avg_order_revenue
     , AVG(i.product_cost) AS avg_order_cost
     , COUNT(DISTINCT i.product_id) AS total_products_purchased
   FROM user_orders o
