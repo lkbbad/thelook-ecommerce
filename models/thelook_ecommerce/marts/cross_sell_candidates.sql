@@ -3,11 +3,6 @@
 -- Used for: Identifying high-potential cross-sell opportunities by highlighting products users engaged with but didn’t buy.
 -- Source tables: event_product_views, order_items_enriched, user_orders, stg_products
 
-set @@dataset_project_id = 'round-music-451401-a5';
-set @@dataset_id = 'thelook_analytics';
-
-CREATE OR REPLACE TABLE 
-  cross_sell_candidates AS
 WITH views_by_user_product AS (
   SELECT
     user_id
@@ -16,7 +11,7 @@ WITH views_by_user_product AS (
     , MIN(event_created_at) AS first_viewed_at
     , MAX(event_created_at) AS last_viewed_at
   FROM
-    events_product_views
+    {{ ref('events_product_views') }}
   WHERE
     user_id IS NOT NULL
   GROUP BY 
@@ -29,8 +24,8 @@ actual_purchases AS (
     u.user_id
     , o.product_id
   FROM 
-    user_orders u
-  LEFT JOIN order_items_enriched o ON u.order_id = o.order_id
+    {{ ref('user_orders') }} u
+  LEFT JOIN {{ ref('order_items_enriched') }} o ON u.order_id = o.order_id
   WHERE o.item_status NOT IN ('Cancelled')
 ),
 
@@ -71,6 +66,6 @@ SELECT
     END AS estimated_lost_revenue
 FROM
   cross_sell_base c
-LEFT JOIN stg_products p ON c.product_id = p.product_id
+LEFT JOIN {{ ref('stg_products') }} p ON c.product_id = p.product_id
 WHERE
-  c.has_purchased = 0;
+  c.has_purchased = 0
