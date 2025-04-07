@@ -3,11 +3,6 @@
 -- Used by: user_events, event_product_views, customer_metrics, product_performance
 -- Source table: thelook_local.events
 
-set @@dataset_project_id = 'round-music-451401-a5';
-set @@dataset_id = 'thelook_analytics';
-
-CREATE OR REPLACE TABLE
-  stg_events AS
 SELECT
   id AS event_id
   , user_id
@@ -20,4 +15,5 @@ SELECT
   , browser
   , traffic_source
   , user_id IS NULL AS no_user_id
-FROM thelook_local.events;
+FROM 
+    `round-music-451401-a5.thelook_local.events`

@@ -4,11 +4,6 @@
 -- Used by: order_items_enriched, product_performance, customer_metrics
 -- Source table: thelook_local.products
 
-set @@dataset_project_id = 'round-music-451401-a5';
-set @@dataset_id = 'thelook_analytics';
-
-CREATE OR REPLACE TABLE 
-  stg_products AS
 SELECT 
   id AS product_id
   , name AS product_name
@@ -19,4 +14,4 @@ SELECT
   , department AS product_department
   , distribution_center_id AS product_distribution_center_id  
 FROM
-  thelook_local.products;
+  `round-music-451401-a5.thelook_local.products`
