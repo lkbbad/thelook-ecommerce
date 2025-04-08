@@ -1,0 +1,103 @@
+version: 2
+
+models:
+  - name: stg_users
+    description: "Staging model for user attributes from the raw users table."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: staging
+    columns:
+      - name: user_id
+        description: "Primary key for the user."
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders
+    description: "Staging model for order-level details."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: staging
+    columns:
+      - name: order_id
+        description: "Primary key for the order."
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        description: "Foreign key to the user."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+
+  - name: stg_products
+    description: "Staging model for product metadata."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: staging
+    columns:
+      - name: product_id
+        description: "Primary key for the product."
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_order_items
+    description: "Staging model for items in existing orders."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: staging
+    columns:
+      - name: item_id
+        description: "Primary key for the item."
+        tests:
+          - not_null
+          - unique
+      - name: order_id
+        description: "Foreign key to the order."
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: user_id
+        description: "Foreign key to the user."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: product_id
+        description: "Foreign key to the product."
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+
+  - name: stg_events
+    description: "Staging model for events (user behavior)."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: staging
+    columns:
+      - name: event_id
+        description: "Primary key for the event."
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        description: "Foreign key to the user."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: product_id
+        description: "Foreign key to the product."
+        tests:
+          - relationships: 
+              to: ref('stg_products')
+              field: product_id
