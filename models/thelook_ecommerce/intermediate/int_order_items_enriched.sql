@@ -1,4 +1,4 @@
--- Intermediate Model: order_items_enriched
+-- Intermediate Model: int_order_items_enriched
 -- Description: Joins cleaned order item data with product metadata to create a product-aware item-level dataset.
 -- Includes product name, brand, category, pricing, and distribution attributes alongside order item details.
 -- Used by: product_performance, customer_metrics
