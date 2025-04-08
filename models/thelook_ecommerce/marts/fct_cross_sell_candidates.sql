@@ -1,4 +1,4 @@
--- Mart: cross_sell_candidates
+-- Mart: fct_cross_sell_candidates
 -- Description: One row per user-product pair where the product was viewed but not purchased. Includes view counts, view timestamps, product metadata, and estimated lost revenue.
 -- Used for: Identifying high-potential cross-sell opportunities by highlighting products users engaged with but didn’t buy.
 -- Source tables: event_product_views, order_items_enriched, user_orders, stg_products
@@ -11,7 +11,7 @@ WITH views_by_user_product AS (
     , MIN(event_created_at) AS first_viewed_at
     , MAX(event_created_at) AS last_viewed_at
   FROM
-    {{ ref('events_product_views') }}
+    {{ ref('int_events_product_views') }}
   WHERE
     user_id IS NOT NULL
   GROUP BY 
@@ -24,8 +24,8 @@ actual_purchases AS (
     u.user_id
     , o.product_id
   FROM 
-    {{ ref('user_orders') }} u
-  LEFT JOIN {{ ref('order_items_enriched') }} o ON u.order_id = o.order_id
+    {{ ref('int_user_orders') }} u
+  LEFT JOIN {{ ref('int_order_items_enriched') }} o ON u.order_id = o.order_id
   WHERE o.item_status NOT IN ('Cancelled')
 ),
 
