@@ -15,7 +15,6 @@ SELECT
   , i.item_sale_price AS product_sale_price
   , p.product_cost
   , p.product_department
-  , p.product_distribution_center_id
   , i.item_status
 FROM
   {{ ref('stg_order_items') }} i
