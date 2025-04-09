@@ -4,7 +4,7 @@
 
 This project explores customer engagement and product performance using the [Looker E-Commerce Dataset (BigQuery Public Data)](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce). It simulates the kind of work an Analytics Engineer might do at a product-led company: building clean, modular data models that support customer segmentation, behavioral analytics, and revenue opportunity insights.
 
-The project is structured in a dbt-style workflow, using BigQuery and modular SQL files grouped into staging, intermediate, and mart layers.
+The project is built using **dbt Cloud**, with models grouped into staging, intermediate, and mart layers. All models are tested, documented, and version-controlled in GitHub.
 
 ---
 
@@ -21,55 +21,65 @@ This includes:
 
 ## Project Structure
 
-The project follows a layered modeling pattern:
+---
+
+## Project Structure
+
+This project follows a layered dbt modeling pattern. The DAG below shows the flow of data from raw source to final marts and tests:
+
+![DAG Screenshot](images/dbt_dag.png)
 
 <pre>
 models/
 ├── staging/
+│   ├── _schema.yml
+│   ├── _source.yml
 │   ├── stg_users.sql
 │   ├── stg_orders.sql
 │   ├── stg_order_items.sql
 │   ├── stg_products.sql
 │   └── stg_events.sql
 ├── intermediate/
-│   ├── user_orders.sql
-│   ├── user_events.sql
-│   ├── order_items_enriched.sql
-│   └── event_product_views.sql
+│   ├── _schema.yml
+│   ├── int_user_orders.sql
+│   ├── int_user_events.sql
+│   ├── int_order_items_enriched.sql
+│   └── int_event_product_views.sql
 └── marts/
-    ├── customer_metrics.sql
-    ├── product_performance.sql
-    └── cross_sell_candidates.sql
+    ├── _schema.yml
+    ├── dim_customer_metrics.sql
+    ├── dim_product_performance.sql
+    └── fct_cross_sell_candidates.sql
 </pre>
 
 ---
 
 ## Final Models (Marts)
 
-### `customer_metrics.sql`
+### `dim_customer_metrics.sql`
 One row per user with behavioral and transactional metrics including total events, sessions, orders, revenue, product diversity, and recency.
 
-### `product_performance.sql`
+### `dim_product_performance.sql`
 One row per product with metrics for views, purchases, revenue, profit, conversion rate, and return rate.
 
-### `cross_sell_candidates.sql`
+### `fct_cross_sell_candidates.sql`
 One row per user-product pair where the user viewed a product but did not purchase it. Includes product metadata, view timestamps, and estimated lost revenue.
 
 ---
 
 ## Key Tools & Technologies
-- **SQL** (modular, production-style)
-- **BigQuery** (for execution and storage)
-- **GitHub** (version control and repo structure)
-- **dbt-style naming conventions and layering**, though no dbt was used directly
+- **dbt Cloud** (modeling, testing, documentation, DAG lineage)
+- **BigQuery** (warehouse for execution and storage)
+- **GitHub** (version control, project collaboration)
+- **YAML** (schema + test definitions)
 
 ---
 
 ## Potential Next Steps
-- Build a simple dashboard (Streamlit or Looker-style) to visualize results
+- Build a simple dashboard (Looker Studio) to visualize mart outputs
 - Add segmentation logic (RFM tiers, high/medium/low engagement)
-- Migrate to **dbt Cloud** for documentation, lineage, and testing
-- Add BigQuery ML to predict likelihood of purchase based on behavior
+- Connect the dbt project to Airflow for DAG orchestration
+- Use BigQuery ML to predict likelihood of purchase based on behavior
 
 ---
 
