@@ -13,4 +13,4 @@ SELECT
   , gender
   , state
 FROM 
-  {{ source('round-music-451401-a5', 'users') }}
+  {{ source('thelook_ecommerce', 'users') }}

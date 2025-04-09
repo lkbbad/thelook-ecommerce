@@ -14,4 +14,4 @@ SELECT
   , delivered_at AS order_delivered_at
   , num_of_item AS order_item_count
 FROM
-  {{ source('round-music-451401-a5', 'orders') }}
+  {{ source('thelook_ecommerce', 'orders') }}

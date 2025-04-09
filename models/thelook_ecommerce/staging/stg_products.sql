@@ -14,4 +14,4 @@ SELECT
   , department AS product_department
   , distribution_center_id AS product_distribution_center_id  
 FROM
-  {{ source('round-music-451401-a5', 'products') }}
+  {{ source('thelook_ecommerce', 'products') }}
