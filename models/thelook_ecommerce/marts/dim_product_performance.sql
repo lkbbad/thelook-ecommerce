@@ -1,4 +1,4 @@
--- Mart: product_performance
+-- Mart: dim_product_performance
 -- Description: One row per product including metrics for views, purchases, revenue, cost, profit, conversion rate, and return rate.
 -- Used for: Analyzing product-level performance, identifying top sellers, low converters, and high return items.
 -- Source tables: stg_products, event_product_views, order_items_enriched
@@ -9,7 +9,7 @@ WITH product_views AS (
     , COALESCE(COUNT(DISTINCT event_id), 0) AS total_product_views
     , COALESCE(COUNT(DISTINCT session_id), 0) AS unique_product_views
   FROM
-    {{ ref('events_product_views') }}
+    {{ ref('int_events_product_views') }}
   GROUP BY 
     product_id
 ),
@@ -24,7 +24,7 @@ product_sales_metrics AS (
   , COALESCE(COUNTIF(item_status = 'Returned'), 0) AS total_product_returns
   , SAFE_DIVIDE(SUM(product_sale_price), COUNT(DISTINCT item_id)) AS avg_sale_price
   FROM
-    {{ ref('order_items_enriched') }}
+    {{ ref('int_order_items_enriched') }}
   GROUP BY 
     product_id
 )

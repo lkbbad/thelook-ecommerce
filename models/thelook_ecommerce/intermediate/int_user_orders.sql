@@ -1,4 +1,4 @@
--- Intermediate Model: user_orders
+-- Intermediate Model: int_user_orders
 -- Description: Joins cleaned user and order data to create a user-level order history. 
 -- Includes order status, timestamps, and item count for each order placed by a user.
 -- Used by: customer_metrics, cross_sell_candidates

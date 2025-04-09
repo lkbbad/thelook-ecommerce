@@ -1,4 +1,4 @@
--- Mart: customer_metrics
+-- Mart: dim_customer_metrics
 -- Description: One row per user summarizing behavioral and transactional metrics for customer profiling.
 -- Includes event counts, session counts, product views, order volume, revenue, profit, and product diversity.
 -- Used for: Customer segmentation, LTV estimation, and identifying candidates for cross-sell or retention campaigns.
@@ -13,8 +13,8 @@ WITH user_orders_agg AS (
     , AVG(i.product_sale_price) AS avg_order_revenue
     , AVG(i.product_cost) AS avg_order_cost
     , COUNT(DISTINCT i.product_id) AS total_products_purchased
-  FROM {{ ref('user_orders') }} o
-  LEFT JOIN {{ ref('order_items_enriched') }} i ON o.order_id = i.order_id 
+  FROM {{ ref('int_user_orders') }} o
+  LEFT JOIN {{ ref('int_order_items_enriched') }} i ON o.order_id = i.order_id 
   GROUP BY 
     o.user_id
   )
@@ -35,9 +35,9 @@ SELECT
   , COALESCE(MAX(r.total_products_purchased), 0) AS total_products_purchased
 FROM 
   {{ ref('stg_users') }} u
-LEFT JOIN {{ ref('user_events') }} e ON u.user_id = e.user_id
-LEFT JOIN {{ ref('events_product_views') }} v ON u.user_id = v.user_id
-LEFT JOIN {{ ref('user_orders') }} o ON u.user_id = o.user_id
+LEFT JOIN {{ ref('int_user_events') }} e ON u.user_id = e.user_id
+LEFT JOIN {{ ref('int_events_product_views') }} v ON u.user_id = v.user_id
+LEFT JOIN {{ ref('int_user_orders') }} o ON u.user_id = o.user_id
 LEFT JOIN user_orders_agg r ON u.user_id = r.user_id
 GROUP BY 
   u.user_id
