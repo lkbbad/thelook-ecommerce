@@ -13,4 +13,4 @@ SELECT
   , gender
   , state
 FROM 
-  `round-music-451401-a5.thelook_local.users`
+  {{ source('round-music-451401-a5', 'users') }}

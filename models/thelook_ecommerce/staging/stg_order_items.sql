@@ -16,4 +16,4 @@ SELECT
   , returned_at AS item_returned_at
   , sale_price AS item_sale_price
 FROM 
-  `round-music-451401-a5.thelook_local.order_items`
+  {{ source('round-music-451401-a5', 'order_items') }}

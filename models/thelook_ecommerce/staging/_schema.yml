@@ -3,10 +3,6 @@ version: 2
 models:
   - name: stg_users
     description: "Staging model for user attributes from the raw users table."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: staging
     columns:
       - name: user_id
         description: "Primary key for the user."
@@ -16,10 +12,6 @@ models:
 
   - name: stg_orders
     description: "Staging model for order-level details."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: staging
     columns:
       - name: order_id
         description: "Primary key for the order."
@@ -35,10 +27,6 @@ models:
 
   - name: stg_products
     description: "Staging model for product metadata."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: staging
     columns:
       - name: product_id
         description: "Primary key for the product."
@@ -48,10 +36,6 @@ models:
 
   - name: stg_order_items
     description: "Staging model for items in existing orders."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: staging
     columns:
       - name: item_id
         description: "Primary key for the item."
@@ -79,10 +63,6 @@ models:
 
   - name: stg_events
     description: "Staging model for events (user behavior)."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: staging
     columns:
       - name: event_id
         description: "Primary key for the event."

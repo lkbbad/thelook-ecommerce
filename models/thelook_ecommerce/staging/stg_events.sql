@@ -16,4 +16,4 @@ SELECT
   , traffic_source
   , user_id IS NULL AS no_user_id
 FROM 
-    `round-music-451401-a5.thelook_local.events`
+    {{ source('round-music-451401-a5', 'events') }}
