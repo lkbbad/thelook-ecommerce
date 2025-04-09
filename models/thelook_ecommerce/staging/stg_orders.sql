@@ -4,11 +4,6 @@
 -- Used by: user_orders, customer_metrics
 -- Source table: thelook_local.orders
 
-set @@dataset_project_id = 'round-music-451401-a5';
-set @@dataset_id = 'thelook_analytics';
-
-CREATE OR REPLACE TABLE 
-  stg_orders AS
 SELECT 
   order_id
   , user_id
@@ -19,4 +14,4 @@ SELECT
   , delivered_at AS order_delivered_at
   , num_of_item AS order_item_count
 FROM
-  thelook_local.orders;
+  `round-music-451401-a5.thelook_local.orders`

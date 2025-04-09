@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: int_events_product_views
+    description: "Intermediate model for product view events."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: intermediate
+    columns:
+      - name: event_id
+        description: "Primary key for the event."
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_events')
+              field: event_id
+      - name: user_id
+        description: "Foreign key to the user."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: session_id
+        description: "Foreign key to the session of the event."
+        tests:
+          - relationships:
+              to: ref('stg_events')
+              field: session_id
+      - name: product_id
+        description: "Foreign key to the product."
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+  - name: int_order_items_enriched
+    description: "Intermediate model for item-level purchase data enriched with product information."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: intermediate
+    columns:
+      - name: item_id
+        description: "Primary key for the item."
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_order_items')
+              field: item_id
+      - name: order_id
+        description: "Foreign key to the order."
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        description: "Foreign key to the product."
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+  - name: int_user_events
+    description: "Intermediate model for all events by user."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: intermediate
+    columns:
+      - name: user_id
+        description: "Primary key for the user."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: event_id
+        description: "Foreign key to the event."
+        tests:
+          - relationships:
+              to: ref('stg_events')
+              field: event_id
+      - name: session_id
+        description: "Foreign key to the session."
+        tests:
+          - relationships:
+              to: ref('stg_events')
+              field: session_id
+      - name: product_id
+        description: "Foreign key to the product."
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+  - name: int_user_orders
+    description: "Intermediate model for all orders by user."
+    meta:
+      source: "thelook_analytics"
+      owner: "lkbbad"
+      layer: intermediate
+    columns:
+      - name: user_id
+        description: "Primary key for the user."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: order_id
+        description: "Foreign key to the order."
+        tests:
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
