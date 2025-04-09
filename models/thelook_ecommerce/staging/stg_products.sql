@@ -14,4 +14,4 @@ SELECT
   , department AS product_department
   , distribution_center_id AS product_distribution_center_id  
 FROM
-  `round-music-451401-a5.thelook_local.products`
+  {{ source('round-music-451401-a5', 'products') }}

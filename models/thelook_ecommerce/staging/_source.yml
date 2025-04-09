@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: round-music-451401-a5
+    database: thelook_local  
+    schema: round-music-451401-a5
+    tables:
+      - name: events
+      - name: orders
+      - name: order_items
+      - name: products
+      - name: users
