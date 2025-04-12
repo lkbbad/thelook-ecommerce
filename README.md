@@ -4,24 +4,16 @@
 
 This project explores customer engagement and product performance using the [Looker E-Commerce Dataset (BigQuery Public Data)](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce). It simulates the kind of work an Analytics Engineer might do at a product-led company: building clean, modular data models that support customer segmentation, behavioral analytics, and revenue opportunity insights.
 
-The project is built using **dbt Cloud**, with models grouped into staging, intermediate, and mart layers. All models are tested, documented, and version-controlled in GitHub.
-
----
+The project is built using **dbt Cloud**, with models grouped into staging, intermediate, and mart layers. All models are version-controlled in GitHub, documented using dbt, and tested where applicable—with plans to expand coverage in future iterations.
 
 ## Objective
 
-**Goal**: Identify high-value customer segments based on behavioral engagement patterns and estimate potential revenue impact of targeted cross-sell strategies.
+**Goal**: Identify high-value customer segments based on behavioral engagement patterns and estimate potential revenue impact of targeted cross-sell strategies. Develop clean, modular data models to support analytics and reporting.
 
 This includes:
 - Building a reusable customer metrics mart
 - Analyzing product-level views, purchases, and returns
 - Flagging user-product pairs that represent missed revenue opportunities
-
----
-
-## Project Structure
-
----
 
 ## Project Structure
 
@@ -52,7 +44,11 @@ models/
     └── fct_cross_sell_candidates.sql
 </pre>
 
----
+## Key Analyses
+
+- **Customer Segmentation**: RFM analysis to categorize customers based on recency, frequency, and monetary value.
+- **Product Performance**: Identification of top-performing products and categories.
+- **Cross-Sell Opportunities**: Analysis to uncover potential product pairings for cross-selling.
 
 ## Final Models (Marts)
 
@@ -65,23 +61,32 @@ One row per product with metrics for views, purchases, revenue, profit, conversi
 ### `fct_cross_sell_candidates.sql`
 One row per user-product pair where the user viewed a product but did not purchase it. Includes product metadata, view timestamps, and estimated lost revenue.
 
----
-
 ## Key Tools & Technologies
-- **dbt Cloud** (modeling, testing, documentation, DAG lineage)
-- **BigQuery** (warehouse for execution and storage)
-- **GitHub** (version control, project collaboration)
-- **YAML** (schema + test definitions)
 
----
+- **Warehouse**: Google BigQuery
+- **Modeling**: dbt (Cloud)
+- **Orchestration**: Apache Airflow
+- **Visualization**: Looker
+- **Version Control**: GitHub
 
-## Potential Next Steps
-- Build a simple dashboard (Looker Studio) to visualize mart outputs
+## Getting Started
+
+To explore the models yourself:
+1. Clone this repo
+2. Set up your `profiles.yml` with BigQuery credentials
+3. Run dbt:
+   ```bash
+   dbt run
+   dbt test
+   dbt docs generate
+   ```
+
+## Future Enhancements
+
+- Integrate automated data quality checks using more dbt tests
+- Expand Looker dashboards to include more KPIs and filters
 - Add segmentation logic (RFM tiers, high/medium/low engagement)
-- Connect the dbt project to Airflow for DAG orchestration
 - Use BigQuery ML to predict likelihood of purchase based on behavior
-
----
 
 ## About Me
 
