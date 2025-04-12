@@ -1,0 +1,22 @@
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: airflow
+    restart: always
+    command: standalone
+    environment:
+      - AIRFLOW_HOME=/opt/airflow
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/sqlite/airflow.db
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./airflow_metadata:/opt/airflow/sqlite 
+      - "${HOME}/Documents/Personal/thelook-ecommerce:/usr/app/dbt"
+      - "${HOME}/.dbt:/home/airflow/.dbt"
+    ports:
+      - "8080:8080"
+
