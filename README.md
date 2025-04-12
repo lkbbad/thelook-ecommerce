@@ -44,11 +44,18 @@ models/
     └── fct_cross_sell_candidates.sql
 </pre>
 
-## Key Analyses
+## Dashboard (Looker Studio)
 
-- **Customer Segmentation**: RFM analysis to categorize customers based on recency, frequency, and monetary value.
-- **Product Performance**: Identification of top-performing products and categories.
-- **Cross-Sell Opportunities**: Analysis to uncover potential product pairings for cross-selling.
+An interactive dashboard built in Looker Studio visualizes customer engagement patterns and cross-sell opportunities from the dbt-modeled data in BigQuery.
+
+🔗 [Click here to view the live dashboard](https://lookerstudio.google.com/reporting/8526155c-f917-492c-8140-948651a2af2f)
+
+<img src="images/dashboard.png" alt="Dashboard" width="800"/>
+
+Key insights include:
+- Top customers by revenue and engagement behavior
+- Distribution of revenue by product engagement tier
+- Summary stats including average recency, orders per user, and products viewed
 
 ## Final Models (Marts)
 
