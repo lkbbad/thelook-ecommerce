@@ -3,10 +3,6 @@ version: 2
 models:
   - name: dim_customer_metrics
     description: "Mart model for summarizing behavioral and transactional metrics per user."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: marts
     columns:
       - name: user_id
         description: "Primary key for the user."
@@ -18,10 +14,6 @@ models:
               field: user_id
   - name: dim_product_performance
     description: "Mart model for a comprehensive view of performance and purchase metrics by product."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: marts
     columns:
       - name: product_id
         description: "Primary key for the product."
@@ -33,10 +25,6 @@ models:
               field: product_id
   - name: fct_cross_sell_candidates
     description: "Mart model of cross-sell candidates (user-product pairs where the product was viewed but not purchased)."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: marts
     columns:
       - name: user_id
         description: "User who viewed but did not purchase the product."

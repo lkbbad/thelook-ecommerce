@@ -3,10 +3,6 @@ version: 2
 models:
   - name: int_events_product_views
     description: "Intermediate model for product view events."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: intermediate
     columns:
       - name: event_id
         description: "Primary key for the event."
@@ -36,10 +32,6 @@ models:
               field: product_id
   - name: int_order_items_enriched
     description: "Intermediate model for item-level purchase data enriched with product information."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: intermediate
     columns:
       - name: item_id
         description: "Primary key for the item."
@@ -63,10 +55,6 @@ models:
               field: product_id
   - name: int_user_events
     description: "Intermediate model for all events by user."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: intermediate
     columns:
       - name: user_id
         description: "Primary key for the user."
@@ -94,10 +82,6 @@ models:
               field: product_id
   - name: int_user_orders
     description: "Intermediate model for all orders by user."
-    meta:
-      source: "thelook_analytics"
-      owner: "lkbbad"
-      layer: intermediate
     columns:
       - name: user_id
         description: "Primary key for the user."

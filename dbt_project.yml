@@ -2,7 +2,7 @@ name: 'thelook_ecommerce'
 version: '1.0.0'
 config-version: 2
 
-profile: 'default'
+profile: 'thelook_analytics'
 
 model-paths: ["models"]
 analysis-paths: ["analyses"]
