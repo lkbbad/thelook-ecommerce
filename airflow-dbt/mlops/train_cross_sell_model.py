@@ -43,6 +43,6 @@ auc = roc_auc_score(y_test, y_pred_proba)
 print("AUC:", round(auc, 3))
 print(classification_report(y_test, model.predict(X_test)))
 
-joblib.dump(model, "mlops/cross_sell_model.pkl")
-with open("mlops/model_metadata.json", "w") as f:
+joblib.dump(model, "cross_sell_model.pkl")
+with open("model_metadata.json", "w") as f:
     f.write(f'{{"auc": {auc}, "features": {list(X_encoded.columns)}}}')
