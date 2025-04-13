@@ -19,7 +19,7 @@ SELECT
   product_department,
   has_purchased, 
   total_product_views
-FROM {PROJECT_ID}.{DATASET}.fct_cross_sell_candidates
+FROM {PROJECT_ID}.{DATASET}.fct_cross_sell_model_training
 WHERE has_purchased IS NOT NULL
 """
 df = client.query(query).to_dataframe()
