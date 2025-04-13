@@ -1,25 +1,40 @@
-# theLook eCommerce: Customer Insights & Cross-Sell Opportunity Modeling
+# theLook eCommerce: Customer Insights & MLOps Workflow
 
 ## Project Overview
 
-This project explores customer engagement and product performance using the [Looker E-Commerce Dataset (BigQuery Public Data)](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce). It simulates the kind of work an Analytics Engineer might do at a product-led company: building clean, modular data models that support customer segmentation, behavioral analytics, and revenue opportunity insights.
+This project explores customer engagement and product performance using the [Looker E-Commerce Dataset (BigQuery Public Data)](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce). It simulates the kind of work an Analytics Engineer might do at a product-led company: building clean, modular data models that support customer segmentation, behavioral analytics, and revenue opportunity insights.  
 
-The project is built using **dbt Cloud**, with models grouped into staging, intermediate, and mart layers. All models are version-controlled in GitHub, documented using dbt, and tested where applicable—with plans to expand coverage in future iterations.
+The stack includes:
+- **dbt Cloud** for modular data modeling (staging → intermediate → marts)  
+- **Airflow** for orchestrating a full ML pipeline  
+- **BigQuery** as the cloud data warehouse  
+- **Python** for model training and evaluation  
+- **Docker** for local container orchestration
 
 ## Objective
 
-**Goal**: Identify high-value customer segments based on behavioral engagement patterns and estimate potential revenue impact of targeted cross-sell strategies. Develop clean, modular data models to support analytics and reporting.
-
-This includes:
-- Building a reusable customer metrics mart
-- Analyzing product-level views, purchases, and returns
-- Flagging user-product pairs that represent missed revenue opportunities
+- Identify cross-sell opportunities from product view behavior  
+- Develop a predictive model to estimate likelihood of purchase  
+- Automate the end-to-end ML workflow inside an Airflow DAG  
 
 ## Project Structure
 
 This project follows a layered dbt modeling pattern. The DAG below shows the flow of data from raw source to final marts and tests:
 
 ![DAG Screenshot](images/dbt_dag.png)
+
+### Root Folder Structure
+
+<pre>
+.
+├── dbt/                      # dbt models and configurations  
+├── airflow-dbt/             # Airflow DAGs, docker-compose config, ML scripts  
+├── mlops/                   # Model training script and outputs  
+├── images/                  # DAG screenshots and visuals  
+└── README.md
+</pre>
+
+### `dbt/` Folder Structure
 
 <pre>
 models/
@@ -41,6 +56,7 @@ models/
     ├── _schema.yml
     ├── dim_customer_metrics.sql
     ├── dim_product_performance.sql
+    ├── fct_cross_sell_model_training.sql
     └── fct_cross_sell_candidates.sql
 </pre>
 
@@ -68,32 +84,23 @@ One row per product with metrics for views, purchases, revenue, profit, conversi
 ### `fct_cross_sell_candidates.sql`
 One row per user-product pair where the user viewed a product but did not purchase it. Includes product metadata, view timestamps, and estimated lost revenue.
 
-## Key Tools & Technologies
+### `fct_cross_sell_model_training.sql`
+One row per user-product pair. Includes product metadata, view timestamps, and estimated lost revenue. Used for ML model training.
 
-- **Warehouse**: Google BigQuery
-- **Modeling**: dbt (Cloud)
-- **Orchestration**: Apache Airflow
-- **Visualization**: Looker
-- **Version Control**: GitHub
+## Key Components
+
+- Logistic regression model (sklearn) to predict purchase probability
+- Evaluation metrics (AUC, precision, recall, F1)
+- Model and metadata saved to disk
 
 ## Getting Started
 
 To explore the models yourself:
-1. Clone this repo
-2. Set up your `profiles.yml` with BigQuery credentials
-3. Run dbt:
-   ```bash
-   dbt run
-   dbt test
-   dbt docs generate
-   ```
-
-## Future Enhancements
-
-- Integrate automated data quality checks using more dbt tests
-- Expand Looker dashboards to include more KPIs and filters
-- Add segmentation logic (RFM tiers, high/medium/low engagement)
-- Use BigQuery ML to predict likelihood of purchase based on behavior
+1. Clone this repo and `cd airflow-dbt/`
+2. Mount your BigQuery service account and`.dbt/profiles.yml`
+3. Run `docker compose up -d`
+4. Login to Airflow UI
+4. Trigger the DAG from the Airflow UI
 
 ## About Me
 
