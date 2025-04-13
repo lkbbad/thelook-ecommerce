@@ -38,3 +38,18 @@ models:
           - relationships:
               to: ref('stg_products')
               field: product_id
+  - name: fct_cross_sell_model_training
+    description: "Mart model of cross-sell candidates (user-product pairs) for model training."
+    columns:
+      - name: user_id
+        description: "User who viewed the product."
+        tests:
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
+      - name: product_id
+        description: "Product viewed by the user."
+        tests:
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
