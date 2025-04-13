@@ -5,18 +5,22 @@ services:
       dockerfile: Dockerfile
     container_name: airflow
     restart: always
-    command: standalone
+    command: >
+      bash -c "pip install -r /usr/app/mlops/requirements.txt && airflow standalone"
     environment:
       - AIRFLOW_HOME=/opt/airflow
       - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/sqlite/airflow.db
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - BQ_PROJECT=round-music-451401-a5
+      - BQ_DATASET=thelook_analytics
+      - GOOGLE_APPLICATION_CREDENTIALS=/home/airflow/.dbt/round-music-451401-a5-4219d8a7ab62.json
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./airflow_metadata:/opt/airflow/sqlite 
-      - "${HOME}/thelook-ecommerce:/usr/app/dbt"
+      - ./mlops:/usr/app/mlops
+      - "${HOME}/Documents/Personal/thelook-ecommerce:/usr/app/dbt"
       - "${HOME}/.dbt:/home/airflow/.dbt"
     ports:
       - "8080:8080"
-

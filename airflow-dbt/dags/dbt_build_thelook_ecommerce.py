@@ -12,7 +12,7 @@ with DAG(
     dag_id='dbt_pipeline_thelook',
     default_args=default_args,
     description='Modular dbt pipeline for theLook eCommerce project',
-    schedule_interval='*/3 * * * *',
+    schedule_interval=None,
     catchup=False,
     tags=['dbt', 'thelook'],
 ) as dag:
@@ -32,10 +32,15 @@ with DAG(
         bash_command='cd /usr/app/dbt && dbt test',
     )
 
+    train_cross_sell_model = BashOperator(
+        task_id='train_cross_sell_model',
+        bash_command='python /usr/app/mlops/train_cross_sell_model.py',
+    )
+
     dbt_docs_generate = BashOperator(
         task_id='dbt_docs_generate',
         bash_command='cd /usr/app/dbt && dbt docs generate',
     )
 
     # Define execution order
-    dbt_seed >> dbt_run >> dbt_test >> dbt_docs_generate
+    dbt_seed >> dbt_run >> dbt_test >> train_cross_sell_model >> dbt_docs_generate
